@@ -1,0 +1,23 @@
+[
+  {
+    "shortId": "1q5rtn",
+    "longUrl": "https://www.sahibinden.com/",
+    "shortUrl": "http://localhost:5001/1q5rtn",
+    "clicks": 11,
+    "createdAt": "2025-04-24T20:04:05.145Z"
+  },
+  {
+    "shortId": "ujpace",
+    "longUrl": "https://www.sahibinden.com/",
+    "shortUrl": "http://localhost:5001/ujpace",
+    "clicks": 0,
+    "createdAt": "2025-04-24T20:05:50.157Z"
+  },
+  {
+    "shortId": "v7g4m6",
+    "longUrl": "https://github.com/hsynadguzel/b2b-backend-hetabil/blob/main/src/server/routers/api.v1.router.ts",
+    "shortUrl": "http://localhost:5001/v7g4m6",
+    "clicks": 0,
+    "createdAt": "2025-04-24T20:05:53.130Z"
+  }
+]

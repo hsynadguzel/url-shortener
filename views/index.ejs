@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Shorten Your URL</h1>
+        <form id="urlForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+                <label for="longUrl">Enter Long URL:</label>
+                <input type="url" id="longUrl" class="form-control" placeholder="Enter a valid URL" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Shorten URL</button>
+        </form>
+
+        <div id="resultContainer" class="mt-5">
+            <!-- The response from the backend will be displayed here -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to handle form submission
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const longUrl = document.getElementById('longUrl').value;
+
+            // Check if the URL is not empty
+            if (!longUrl) {
+                alert("Please enter a URL");
+                return;
+            }
+
+            try {
+                const response = await fetch('/web/api/v1/url/shorten', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ longUrl }),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    // Display the response dynamically
+                    const message = result.message;
+                    const data = result.data;
+                    const resultContainer = document.getElementById('resultContainer');
+                    resultContainer.innerHTML = `
+            <div class="alert alert-success">
+            <h2>${message}</h2>
+            <p><strong>Short URL:</strong> <a href="/${data.shortId}" target="_blank">${data.shortUrl}</a></p>
+            <p><strong>Long URL:</strong> ${data.longUrl}</p>
+            <p><strong>Created At:</strong> ${new Date(data.createdAt).toLocaleString()}</p>
+            <p><strong>Clicks:</strong> ${data.clicks}</p>
+            </div>
+        `;
+                } else {
+                    alert(result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Something went wrong!');
+            }
+        }
+    </script>
+</body>
+
+</html>

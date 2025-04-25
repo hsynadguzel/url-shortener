@@ -1,0 +1,114 @@
+/* Importing Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* Root Colors */
+:root {
+  --primary-bg: #0f172a;
+  --secondary-bg: #1e293b;
+  --text-light: #f1f5f9;
+  --accent-blue: #3b82f6;
+  --border-color: #334155;
+  --hover-bg: #2563eb;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--text-light);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  color: var(--accent-blue);
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--primary-bg);
+  font-weight: 600;
+}
+
+td a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+td a:hover {
+  color: var(--hover-bg);
+  text-decoration: underline;
+}
+
+.text-center {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: var(--secondary-bg);
+  }
+
+  td {
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-weight: bold;
+    color: var(--accent-blue);
+    text-align: left;
+  }
+
+  td:last-child {
+    border-bottom: none;
+  }
+}
