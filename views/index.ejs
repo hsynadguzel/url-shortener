@@ -13,23 +13,32 @@
 <body>
     <div class="container mt-5">
         <h1>Shorten Your URL</h1>
-        <form id="urlForm" onsubmit="handleFormSubmit(event)">
-            <div class="form-group">
-                <label for="longUrl">Enter Long URL:</label>
-                <input type="url" id="longUrl" class="form-control" placeholder="Enter a valid URL" required>
+        <% if (typeof message !=='undefined' && message) { %>
+            <div id="info-alert" class="alert alert-danger">
+                <%= message %>
             </div>
-            <button type="submit" class="btn btn-primary">Shorten URL</button>
-        </form>
+            <% } %>
 
-        <div id="resultContainer" class="mt-5">
-            <!-- The response from the backend will be displayed here -->
-        </div>
+                <form id="urlForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="longUrl">Enter Long URL:</label>
+                        <input type="url" id="longUrl" class="form-control" placeholder="Enter a valid URL" required>
+                    </div>
+                    <button type="submit" id="submit-button" class="btn btn-primary">Shorten URL</button>
+                </form>
+
+                <div id="resultContainer" class="mt-5">
+                    <!-- The response from the backend will be displayed here -->
+                </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Function to handle form submission
         async function handleFormSubmit(event) {
+            submitButton = document.getElementById('submit-button');
+            infoAlert = document.getElementById('info-alert');
+            if (infoAlert) infoAlert.remove();
             event.preventDefault();
 
             const longUrl = document.getElementById('longUrl').value;
@@ -39,6 +48,10 @@
                 alert("Please enter a URL");
                 return;
             }
+
+            // Set button to loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Shortening...`;
 
             try {
                 const response = await fetch('/web/api/v1/url/shorten', {
@@ -69,6 +82,9 @@
                 console.error('Error:', error);
                 alert('Something went wrong!');
             }
+            // Reset button to original state
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Shorten URL';
         }
     </script>
 </body>

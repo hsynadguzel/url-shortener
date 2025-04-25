@@ -22,7 +22,7 @@ class UrlController {
         data: newUrl,
       });
     } catch (error) {
-      return res.status(500).json({ error: "An error occurred while shortening the URL." });
+      return res.status(500).json({ message: "An error occurred while shortening the URL." });
     }
   }
 
@@ -36,7 +36,10 @@ class UrlController {
       const urlData = data.find((item) => item.shortId === shortId);
 
       if (!urlData) {
-        return res.status(404).json({ error: "URL not found." });
+        return res.render("index", {
+          title: "URL Shortener",
+          message: "The URL you are looking for does not exist.",
+        });
       }
 
       // URL tıklama sayısını artır
@@ -45,7 +48,7 @@ class UrlController {
 
       return res.redirect(urlData.longUrl);
     } catch (error) {
-      return res.status(500).json({ error: "An error occurred while redirecting." });
+      return res.status(500).json({ message: "An error occurred while redirecting." });
     }
   }
 
@@ -60,7 +63,7 @@ class UrlController {
       const urlData = data.find((item) => item.shortId === shortId);
 
       if (!urlData) {
-        return res.status(404).json({ error: "URL not found." });
+        return res.status(404).json({ message: "URL not found." });
       }
 
       // URL'yi güncelle
@@ -69,7 +72,7 @@ class UrlController {
 
       return res.status(200).json({ message: "URL updated successfully." });
     } catch (error) {
-      return res.status(500).json({ error: "An error occurred while updating the URL." });
+      return res.status(500).json({ message: "An error occurred while updating the URL." });
     }
   }
 
@@ -83,7 +86,7 @@ class UrlController {
       const index = data.findIndex((item) => item.shortId === shortId);
 
       if (index === -1) {
-        return res.status(404).json({ error: "URL not found." });
+        return res.status(404).json({ message: "URL not found." });
       }
 
       // URL'yi sil
@@ -92,7 +95,7 @@ class UrlController {
 
       return res.status(200).json({ message: "URL deleted successfully." });
     } catch (error) {
-      return res.status(500).json({ error: "An error occurred while deleting the URL." });
+      return res.status(500).json({ message: "An error occurred while deleting the URL." });
     }
   }
 
@@ -107,7 +110,10 @@ class UrlController {
         urls: data
       });
     } catch (error) {
-      return res.status(500).json({ error: "An error occurred while fetching the URLs." });
+      return res.status(500).render("dashboard", {
+        title: "Dashboard",
+        message: "An error occurred while fetching the URLs."
+      });
     }
   }
 }
